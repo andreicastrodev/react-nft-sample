@@ -27,6 +27,18 @@ const UserForm = () => {
   const blockchainChargeRef = useRef("");
   const imageRef = useRef("");
 
+  const initialMetadata = {
+    format: 'CHIP-0007',
+    minting_tool: 'mintgarden-studio',
+    sensitive_content: false,
+    name: '',
+    description: '',
+    attributes: [],
+  };
+
+  const metadata = JSON.parse(JSON.stringify(initialMetadata));
+
+
   const submitHandler = (e) => {
     e.preventDefault();
     const creatorValue = creatorRef.current.value;
