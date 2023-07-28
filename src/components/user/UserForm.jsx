@@ -15,6 +15,7 @@ import {
 import { useRef, useState } from "react";
 import { BsStars, BsFillTrashFill } from "react-icons/bs";
 import { GiAbstract006 } from "react-icons/gi";
+import axios from "axios";
 
 const UserForm = () => {
   const [imgFile, setImg] = useState("");
@@ -28,18 +29,17 @@ const UserForm = () => {
   const imageRef = useRef("");
 
   const initialMetadata = {
-    format: 'CHIP-0007',
-    minting_tool: 'mintgarden-studio',
+    format: "CHIP-0007",
+    minting_tool: "mintgarden-studio",
     sensitive_content: false,
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     attributes: [],
   };
 
   const metadata = JSON.parse(JSON.stringify(initialMetadata));
 
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const creatorValue = creatorRef.current.value;
     const nameRefValue = nameRef.current.value;
@@ -49,18 +49,48 @@ const UserForm = () => {
     const blockchainChargeValue = blockchainChargeRef.current.value;
     const imageValue = imageRef.current.value;
 
-    const data ={
-        creatorValue,
-        nameRefValue,
-        descriptionValue,
-        licenseValue,
-        royaltyPercentageValue,
-        blockchainChargeValue,
-        imageValue
+    // const data ={
+    //     creatorValue,
+    //     nameRefValue,
+    //     descriptionValue,
+    //     licenseValue,
+    //     royaltyPercentageValue,
+    //     blockchainChargeValue,
+    //     imageValue
+    // }
+
+    const formData = new FormData();
+    formData.append("image", imageValue);
+    formData.append("name", nameRefValue);
+    formData.append("description", descriptionValue);
+
+    try {
+      const res = await fetch("http://localhost:8080/nft/mint", {
+        method: "POST",
+        body: formData,
+      });
+      console.log(res);
+    } catch (error) {
+        console.log(error);
     }
 
-    console.log(data);
+    //nft creation
+    // axios
+    //   .post("http://localhost:8080/nft/mint", {
+    //     imagePath: imageValue,
+    //     name: nameRefValue,
+    //     description: descriptionValue,
+    //   })
+    //   .then((res) => {
+    //     console.log(res.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
+    // axios.get('http://localhost:8080/nft/nfts').then((res)=>{
+    //     console.log(res.data);
+    // })
   };
 
   const handleImage = (e) => {
@@ -72,8 +102,8 @@ const UserForm = () => {
   };
 
   return (
-    <form onSubmit={submitHandler}>
-      <FormControl  gap="2rem" display={"flex"}>
+    <form enctype="multipart/form-data" onSubmit={submitHandler}>
+      <FormControl gap="2rem" display={"flex"}>
         <Flex gap="1.5rem" flexBasis={"50%"} flexDirection={"column"}>
           <Box>
             <FormLabel>Creator</FormLabel>

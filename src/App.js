@@ -11,6 +11,10 @@ import Testimonials from "./components/ui/Testimonials";
 const clientId =
   "BDrqTk0B213bGyM0mUeMaTz8mvbuW9bMsGhes4D94y5u3DFZ8Rpy33vcfSCx75f44SeqZQ1awmnZ4b8JXAhbKLM"; // get from https://dashboard.web3auth.io
 
+// API KEY h0YXu5dF-4nWLjZsqvTashGSHCZo9Aal
+// https https://astar-mainnet.g.alchemy.com/v2/h0YXu5dF-4nWLjZsqvTashGSHCZo9Aal
+// web sockets wss://astar-mainnet.g.alchemy.com/v2/h0YXu5dF-4nWLjZsqvTashGSHCZo9Aal
+
 function App() {
   const [web3auth, setWeb3auth] = useState(null);
   const [provider, setProvider] = useState(null);
